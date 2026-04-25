@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Event | Event Notes Web</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="container">
+    <h1>Create Event</h1>
+    <p class="subtitle">Type your own event details or find one from the web and auto-fill key info.</p>
+    <p class="top-links"><a href="index.html">← Back to Home</a></p>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <div class="tab-row" role="tablist" aria-label="Create event methods">
+        <button class="tab active" id="manualTab" role="tab" aria-selected="true" aria-controls="manualPanel">Type Event Info</button>
+        <button class="tab" id="searchTab" role="tab" aria-selected="false" aria-controls="searchPanel">Find Existing Event</button>
+      </div>
+
+      <section id="manualPanel" class="tab-panel" role="tabpanel" aria-labelledby="manualTab">
+        <form id="manualEventForm" class="form-grid">
+          <label>
+            Event Name
+            <input type="text" id="eventName" required />
+          </label>
+          <label>
+            Date
+            <input type="date" id="eventDate" />
+          </label>
+          <label>
+            Location
+            <input type="text" id="eventLocation" />
+          </label>
+          <label>
+            Website
+            <input type="url" id="eventWebsite" placeholder="https://" />
+          </label>
+          <label class="full-width">
+            Description
+            <textarea id="eventDescription" rows="4" placeholder="What is this event about?"></textarea>
+          </label>
+
+          <div class="form-actions full-width">
+            <button type="submit">Save Event</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="searchPanel" class="tab-panel hidden" role="tabpanel" aria-labelledby="searchTab">
+        <form id="searchEventForm" class="form-grid">
+          <label class="full-width">
+            Search Query
+            <input type="text" id="eventSearchQuery" placeholder="e.g., React conference San Francisco 2026" required />
+          </label>
+
+          <div class="form-actions full-width">
+            <button type="submit" id="runSearchBtn">Find Event Info</button>
+          </div>
+        </form>
+
+        <p class="status" id="searchStatus"></p>
+
+        <div id="searchResults" class="search-results hidden"></div>
+      </section>
+    </section>
+
+    <section class="card hidden" id="eventPreviewCard" aria-live="polite">
+      <h2>Event Preview</h2>
+      <div id="eventPreview"></div>
+    </section>
+  </main>
+
+  <script src="create-event.js"></script>
+</body>
+</html>
