@@ -1,0 +1,26 @@
+{
+  "schema": "v2",
+  "services": [
+    {
+      "name": "event-notes-web",
+      "type": "web",
+      "build": {
+        "builder": "nixpacks"
+      },
+      "env": [
+        {
+          "name": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "name": "PORT",
+          "value": "8080"
+        }
+      ],
+      "scale": {
+        "min": 1,
+        "max": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+# robots.txt - Block all crawlers and AI bots
+User-agent: *
+Disallow: /
+
+# Specifically block known AI crawlers
+User-agent:anthropic-ai
+Disallow: /
+
+User-agent: openai
+Disallow: /
+
+User-agent: google-hash
+Disallow: /
+
+User-agent: google-extended
+Disallow: /
+
+User-agent: ccbot
+Disallow: /
+
+User-agent: claude-ai
+Disallow: /
+
+User-agent: chatgpt
+Disallow: /
