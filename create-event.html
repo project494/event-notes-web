@@ -9,7 +9,7 @@
 <body>
   <header class="container">
     <h1>Create Event</h1>
-    <p class="subtitle">Type your own event details or find one from the web and import event details.</p>
+    <p class="subtitle">Type your own event details or find one from the web and auto-fill key info.</p>
     <p class="top-links"><a href="index.html">← Back to Home</a></p>
   </header>
 
@@ -17,7 +17,7 @@
     <section class="card">
       <div class="tab-row" role="tablist" aria-label="Create event methods">
         <button class="tab active" id="manualTab" role="tab" aria-selected="true" aria-controls="manualPanel">Type Event Info</button>
-        <button class="tab" id="searchTab" role="tab" aria-selected="false" aria-controls="searchPanel">Search Event</button>
+        <button class="tab" id="searchTab" role="tab" aria-selected="false" aria-controls="searchPanel">Find Existing Event</button>
       </div>
 
       <section id="manualPanel" class="tab-panel" role="tabpanel" aria-labelledby="manualTab">
@@ -57,7 +57,18 @@
           </label>
 
           <div class="form-actions full-width">
-            <button type="submit" id="runSearchBtn">Search Event</button>
+            <button type="submit" id="runSearchBtn">Find Event Info</button>
+          <label class="full-width">
+            OpenRouter API Key (optional, for AI extraction)
+            <input type="password" id="openRouterApiKey" placeholder="sk-or-v1-..." autocomplete="off" />
+            <small>
+              Uses a free model (<code>meta-llama/llama-3.1-8b-instruct:free</code>) to extract key details.
+              Key is saved in your browser only.
+            </small>
+          </label>
+
+          <div class="form-actions full-width">
+            <button type="submit" id="runSearchBtn">Search + Extract Details</button>
           </div>
         </form>
 
