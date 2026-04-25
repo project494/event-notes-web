@@ -30,6 +30,8 @@ const renderEventPreview = (eventData) => {
   eventPreview.innerHTML = `
     <dl class="preview-grid">
       <dt>Name</dt><dd>${eventData.name || "—"}</dd>
+      <dt>Date</dt><dd>${eventData.date || "Unknown"}</dd>
+      <dt>Location</dt><dd>${eventData.location || "Unknown"}</dd>
       <dt>Date</dt><dd>${eventData.date || "—"}</dd>
       <dt>Location</dt><dd>${eventData.location || "—"}</dd>
       <dt>Website</dt><dd>${eventData.website ? `<a href="${eventData.website}" target="_blank" rel="noopener noreferrer">${eventData.website}</a>` : "—"}</dd>
@@ -41,6 +43,26 @@ const renderEventPreview = (eventData) => {
 const sanitizeResult = (text) => {
   if (!text) return "";
   return text.replace(/<[^>]*>/g, "").trim();
+};
+
+const guessDateFromText = (text) => {
+  const patterns = [
+    /\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*\s+\d{1,2},?\s+\d{4}\b/i,
+    /\b\d{4}-\d{2}-\d{2}\b/,
+    /\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/,
+  ];
+
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (match) return match[0];
+  }
+
+  return "Unknown";
+};
+
+const guessLocationFromText = (text) => {
+  const match = text.match(/\b(in|at)\s+([A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+){0,3})\b/);
+  return match ? match[2] : "Unknown";
 };
 
 const searchWikipedia = async (query) => {
@@ -65,6 +87,17 @@ const searchWikipedia = async (query) => {
   }));
 };
 
+const buildEventFromResults = (query, results) => {
+  const top = results[0] || {};
+  const combinedText = `${top.title || ""}. ${top.snippet || ""}`;
+
+  return {
+    name: top.title || query,
+    date: guessDateFromText(combinedText),
+    location: guessLocationFromText(combinedText),
+    website: top.url || "",
+    description: top.snippet || "No summary available from search results.",
+  };
 const extractDetailsWithAI = async (query, results, apiKey) => {
   if (!apiKey) {
     const top = results[0] || {};
@@ -159,6 +192,10 @@ manualEventForm.addEventListener("submit", (event) => {
 searchEventForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const query = document.getElementById("eventSearchQuery").value.trim();
+
+  if (!query) return;
+
+  searchStatus.textContent = "Finding event info from the web...";
   const apiKey = openRouterApiKey.value.trim();
 
   if (!query) return;
@@ -179,6 +216,7 @@ searchEventForm.addEventListener("submit", async (event) => {
       return;
     }
 
+    const eventData = buildEventFromResults(query, results);
     searchStatus.textContent = apiKey
       ? "Running AI extraction on web results..."
       : "No API key provided. Showing web results with basic auto-fill.";

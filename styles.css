@@ -83,6 +83,8 @@ button:hover,
   color: #111827;
 }
 
+}
+
 .tab.active {
   background: #1d4ed8;
   color: #fff;
