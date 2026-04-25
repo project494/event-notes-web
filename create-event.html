@@ -3,40 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Event Notes Web</title>
+  <title>Create Event | Event Notes Web</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="container">
-    <h1>Event Notes Web</h1>
-    <p class="subtitle">
-      Capture event sessions, keep notes, save contacts, and share your digital card.
-    </p>
+    <h1>Create Event</h1>
+    <p class="subtitle">Type your own event details or find one from the web and auto-fill key info.</p>
+    <p class="top-links"><a href="index.html">← Back to Home</a></p>
   </header>
 
   <main class="container">
     <section class="card">
-      <h2>Welcome 👋</h2>
-      <p>This is your first version. Keep it simple and ship fast.</p>
-      <div class="button-row">
-        <a class="button-link" href="create-event.html">Create Event</a>
-        <button id="viewCardBtn">View Digital Card</button>
-      </div>
-    </section>
-
-    <section class="card hidden" id="eventPreviewCard" aria-live="polite">
-      <h2>Event Preview</h2>
-      <div id="eventPreview"></div>
-    </section>
-  </main>
-
-  <div class="modal hidden" id="createEventModal" role="dialog" aria-modal="true" aria-labelledby="createEventTitle">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 id="createEventTitle">Create Event</h2>
-        <button class="close-button" id="closeEventModalBtn" aria-label="Close create event modal">✕</button>
-      </div>
-
       <div class="tab-row" role="tablist" aria-label="Create event methods">
         <button class="tab active" id="manualTab" role="tab" aria-selected="true" aria-controls="manualPanel">Type Event Info</button>
         <button class="tab" id="searchTab" role="tab" aria-selected="false" aria-controls="searchPanel">Find Existing Event</button>
@@ -95,9 +73,14 @@
 
         <div id="searchResults" class="search-results hidden"></div>
       </section>
-    </div>
-  </div>
+    </section>
 
-  <script src="app.js"></script>
+    <section class="card hidden" id="eventPreviewCard" aria-live="polite">
+      <h2>Event Preview</h2>
+      <div id="eventPreview"></div>
+    </section>
+  </main>
+
+  <script src="create-event.js"></script>
 </body>
 </html>

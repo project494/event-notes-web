@@ -1,9 +1,3 @@
-document.getElementById("viewCardBtn").addEventListener("click", () => {
-const createEventBtn = document.getElementById("createEventBtn");
-const viewCardBtn = document.getElementById("viewCardBtn");
-const createEventModal = document.getElementById("createEventModal");
-const closeEventModalBtn = document.getElementById("closeEventModalBtn");
-
 const manualTab = document.getElementById("manualTab");
 const searchTab = document.getElementById("searchTab");
 const manualPanel = document.getElementById("manualPanel");
@@ -20,10 +14,6 @@ const openRouterApiKey = document.getElementById("openRouterApiKey");
 const OPENROUTER_MODEL = "meta-llama/llama-3.1-8b-instruct:free";
 const OPENROUTER_ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
 const OPENROUTER_KEY_STORAGE = "openrouter_api_key";
-
-const toggleModal = (show) => {
-  createEventModal.classList.toggle("hidden", !show);
-};
 
 const switchTab = (tabName) => {
   const isManual = tabName === "manual";
@@ -148,18 +138,6 @@ const renderSearchResults = (results) => {
     .join("");
 };
 
-createEventBtn.addEventListener("click", () => {
-  switchTab("manual");
-  toggleModal(true);
-});
-
-closeEventModalBtn.addEventListener("click", () => toggleModal(false));
-createEventModal.addEventListener("click", (event) => {
-  if (event.target === createEventModal) {
-    toggleModal(false);
-  }
-});
-
 manualTab.addEventListener("click", () => switchTab("manual"));
 searchTab.addEventListener("click", () => switchTab("search"));
 
@@ -175,7 +153,6 @@ manualEventForm.addEventListener("submit", (event) => {
   };
 
   renderEventPreview(payload);
-  toggleModal(false);
   manualEventForm.reset();
 });
 
@@ -213,10 +190,6 @@ searchEventForm.addEventListener("submit", async (event) => {
   } catch (error) {
     searchStatus.textContent = error.message || "Something went wrong. Please try again.";
   }
-});
-
-viewCardBtn.addEventListener("click", () => {
-  alert("Next step: build Digital Card page.");
 });
 
 openRouterApiKey.value = localStorage.getItem(OPENROUTER_KEY_STORAGE) || "";
