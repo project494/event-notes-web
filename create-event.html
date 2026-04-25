@@ -58,6 +58,17 @@
 
           <div class="form-actions full-width">
             <button type="submit" id="runSearchBtn">Find Event Info</button>
+          <label class="full-width">
+            OpenRouter API Key (optional, for AI extraction)
+            <input type="password" id="openRouterApiKey" placeholder="sk-or-v1-..." autocomplete="off" />
+            <small>
+              Uses a free model (<code>meta-llama/llama-3.1-8b-instruct:free</code>) to extract key details.
+              Key is saved in your browser only.
+            </small>
+          </label>
+
+          <div class="form-actions full-width">
+            <button type="submit" id="runSearchBtn">Search + Extract Details</button>
           </div>
         </form>
 
