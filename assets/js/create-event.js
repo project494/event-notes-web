@@ -5,17 +5,57 @@ const eventPreview = document.getElementById("eventPreview");
 const searchStatus = document.getElementById("searchStatus");
 const searchResults = document.getElementById("searchResults");
 
+const appendPreviewRow = (list, term, valueNode) => {
+  const termElement = document.createElement("dt");
+  termElement.textContent = term;
+
+  const descriptionElement = document.createElement("dd");
+  if (valueNode instanceof Node) {
+    descriptionElement.append(valueNode);
+  } else {
+    descriptionElement.textContent = valueNode;
+  }
+
+  list.append(termElement, descriptionElement);
+};
+
+const safeWebsiteUrl = (website) => {
+  if (!website) return "";
+
+  try {
+    const parsed = new URL(website, window.location.origin);
+    return ["http:", "https:"].includes(parsed.protocol) ? parsed.href : "";
+  } catch {
+    return "";
+  }
+};
+
 const renderEventPreview = (eventData) => {
   eventPreviewCard.classList.remove("hidden");
-  eventPreview.innerHTML = `
-    <dl class="preview-grid">
-      <dt>Name</dt><dd>${eventData.name || "—"}</dd>
-      <dt>Date</dt><dd>${eventData.date || "Unknown"}</dd>
-      <dt>Location</dt><dd>${eventData.location || "Unknown"}</dd>
-      <dt>Website</dt><dd>${eventData.website ? `<a href="${eventData.website}" target="_blank" rel="noopener noreferrer">${eventData.website}</a>` : "—"}</dd>
-      <dt>Description</dt><dd>${eventData.description || "—"}</dd>
-    </dl>
-  `;
+  eventPreview.replaceChildren();
+
+  const previewGrid = document.createElement("dl");
+  previewGrid.className = "preview-grid";
+
+  appendPreviewRow(previewGrid, "Name", eventData.name || "—");
+  appendPreviewRow(previewGrid, "Date", eventData.date || "Unknown");
+  appendPreviewRow(previewGrid, "Location", eventData.location || "Unknown");
+
+  const websiteUrl = safeWebsiteUrl(eventData.website);
+  if (websiteUrl) {
+    const websiteLink = document.createElement("a");
+    websiteLink.href = websiteUrl;
+    websiteLink.target = "_blank";
+    websiteLink.rel = "noopener noreferrer";
+    websiteLink.textContent = websiteUrl;
+    appendPreviewRow(previewGrid, "Website", websiteLink);
+  } else {
+    appendPreviewRow(previewGrid, "Website", "—");
+  }
+
+  appendPreviewRow(previewGrid, "Description", eventData.description || "—");
+
+  eventPreview.append(previewGrid);
 };
 
 const sanitizeResult = (text) => {
